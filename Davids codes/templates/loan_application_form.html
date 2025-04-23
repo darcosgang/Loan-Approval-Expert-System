@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Loan Application Form</title>
+</head>
+<body>
+    <div class="container">
+    <h1>Loan Application Form</h1>
+    <form id="loanForm">
+        <label for="loan_amount">Loan Amount:</label><br>
+        <input type="text" id="loan_amount" name="loan_amount" required><br><br>
+        <label for="loan_duration">Loan Duration (in months):</label><br>
+        <input type="number" id="loan_duration" name="loan_duration" min="1" required><br><br>
+        <button type="button" onclick="calculateLoan()">Submit</button>
+    </form>
+    <div class="button-container">
+    <div id="result"></div>
+    <script>
+        function calculateLoan() {
+            const loanAmount = parseFloat(document.getElementById('loan_amount').value);
+            const loanDuration = parseInt(document.getElementById('loan_duration').value);
+            let interestRate = 0;
+            if (loanDuration === 1) {
+                interestRate = 0.05;
+            } else if (loanDuration === 2) {
+                interestRate = 0.10;
+            } else {
+                interestRate = 0.05 * loanDuration; // 5% per month
+            }
+            const totalAmount = loanAmount + (loanAmount * interestRate);
+            document.getElementById('result').innerHTML = 
+                `<h2>Thank you for your application!</h2>
+                <p>You will pay back: ${totalAmount.toFixed(2)}</p>`;
+        }
+    </script>
+</body>
+</html>
